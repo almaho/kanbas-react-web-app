@@ -8,7 +8,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link"
                 to="/Kanbas/Courses/1234/Home">
-            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200} />
+            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200} alt="Description"/>
             <div>
               <h5>
                  CS1234 React JS
@@ -24,7 +24,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link"
                 to="/Kanbas/Courses/2345/Home">
-            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200} />
+            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200} alt="Description"/>
             <div>
               <h5>CS2345 Node.js</h5>
               <p className="wd-dashboard-course-title">Backend Development</p>
@@ -36,7 +36,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link"
                 to="/Kanbas/Courses/3456/Home">
-            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200}  />
+            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200}  alt="Description" />
             <div>
               <h5>CS3456 Python Programming</h5>
               <p className="wd-dashboard-course-title">Data Science and AI</p>
@@ -48,7 +48,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link"
                 to="/Kanbas/Courses/4567/Home">
-            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200}  />
+            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200} alt="Description" />
             <div>
               <h5>CS4567 Machine Learning</h5>
               <p className="wd-dashboard-course-title">Advanced AI Techniques</p>
@@ -60,7 +60,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link"
                 to="/Kanbas/Courses/5678/Home">
-            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200} />
+            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200} alt="Description"/>
             <div>
               <h5>CS5678 Data Structures</h5>
               <p className="wd-dashboard-course-title">Algorithms and Problem Solving</p>
@@ -72,7 +72,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link"
                 to="/Kanbas/Courses/6789/Home">
-            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200} />
+            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" width={200} alt="Description"/>
             <div>
               <h5>CS6789 DevOps</h5>
               <p className="wd-dashboard-course-title">CI/CD and Automation</p>
@@ -84,7 +84,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link"
                 to="/Kanbas/Courses/7890/Home">
-            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" alt="" width={200}/>
+            <img src="https://www.popwebdesign.net/popart_blog/wp-content/uploads/2018/03/reactjs.jpg" alt="Description" width={200}/>
             <div>
               <h5>CS7890 Cloud Computing</h5>
               <p className="wd-dashboard-course-title">Cloud Infrastructure and Services</p>

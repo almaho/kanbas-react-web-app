@@ -1,21 +1,14 @@
-import Lab1 from "./Lab1";
 import { Route, Routes, Navigate } from "react-router";
-import TOC from "./TOC";
-import Lab2 from "./Lab2";
-import Lab3 from "./Lab3";
+import Account from "../Kanbas/Account";
+
 export default function Labs() {
   return (
     <div>
       <h1>Labs</h1>
-
       <h2>Alma Ghafari</h2> 
-
-      <TOC />
       <Routes>
-        <Route path="/" element={<Navigate to="Lab1" />} />
-        <Route path="Lab1" element={<Lab1 />} />
-        <Route path="Lab2" element={<Lab2 />} />
-        <Route path="Lab3/*" element={<Lab3 />} />
+        <Route path="/" element={<Navigate to="Account" />} />
+        <Route path="/Account/*" element={<Account />} />
       </Routes>
     </div>
   );

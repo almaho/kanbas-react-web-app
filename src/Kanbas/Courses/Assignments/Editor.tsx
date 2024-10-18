@@ -1,19 +1,48 @@
+import { useParams, Link } from "react-router-dom"; // Use react-router-dom for Link
+import * as db from "../../Database"; // Assuming assignments are part of the Database module
+import { useState, useEffect } from "react";
+
+// Define the assignment type
+interface Assignment {
+  _id: string;
+  title: string;
+  description?: string;
+  course: string;
+  due: string;
+  start: string;
+  points: number;
+}
+
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams<{ cid: string; aid: string }>(); // Get course ID and assignment ID from URL params
+  const { assignments } = db; // Get assignments from the database
+  const [assignment, setAssignment] = useState<Assignment | null>(null);
+
+  // Fetch the assignment details based on the ID from the URL
+  useEffect(() => {
+    const selectedAssignment = assignments.find(
+      (assignment) => assignment._id === aid && assignment.course === cid
+    );
+    if (selectedAssignment) {
+      setAssignment(selectedAssignment);
+    }
+  }, [cid, aid, assignments]);
+
+  if (!assignment) {
+    return <div>Loading...</div>; // Show loading state if the assignment is not found yet
+  }
+
   return (
     <div id="wd-assignments-editor" className="p-4">
       {/* Course Name */}
-      <h4>Course Name</h4>
+      <h4>Course: {cid}</h4>
 
       {/* Assignment Name */}
       <div className="mb-3">
         <label htmlFor="wd-name" className="form-label">
           Assignment Name
         </label>
-        <input
-          id="wd-name"
-          className="form-control"
-          value="A1 - ENV + HTML"
-        />
+        <input id="wd-name" className="form-control" value={assignment.title} readOnly />
       </div>
 
       {/* Description */}
@@ -25,7 +54,7 @@ export default function AssignmentEditor() {
           id="wd-description"
           className="form-control"
           rows={4}
-          defaultValue="The assignment is available online. Submit a link to the landing page of"
+          defaultValue={assignment.description || "No description available"}
         />
       </div>
 
@@ -35,7 +64,7 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-points" className="form-label">
             Points
           </label>
-          <input id="wd-points" className="form-control" value={100} />
+          <input id="wd-points" className="form-control" value={assignment.points || 100} />
         </div>
 
         {/* Assignment Group */}
@@ -75,45 +104,6 @@ export default function AssignmentEditor() {
         </div>
       </div>
 
-      {/* Submission Options */}
-      <div className="row">
-        <div className="col-md-6">
-          <div className="form-check mb-2">
-            <input type="checkbox" id="wd-text-entry" className="form-check-input" />
-            <label htmlFor="wd-text-entry" className="form-check-label">
-              Text Entry
-            </label>
-          </div>
-          <div className="form-check mb-2">
-            <input type="checkbox" id="wd-website-url" className="form-check-input" />
-            <label htmlFor="wd-website-url" className="form-check-label">
-              Website URL
-            </label>
-          </div>
-          <div className="form-check mb-2">
-            <input type="checkbox" id="wd-media-recordings" className="form-check-input" />
-            <label htmlFor="wd-media-recordings" className="form-check-label">
-              Media Recordings
-            </label>
-          </div>
-        </div>
-
-        <div className="col-md-6">
-          <div className="form-check mb-2">
-            <input type="checkbox" id="wd-student-annotation" className="form-check-input" />
-            <label htmlFor="wd-student-annotation" className="form-check-label">
-              Student Annotation
-            </label>
-          </div>
-          <div className="form-check mb-2">
-            <input type="checkbox" id="wd-file-upload" className="form-check-input" />
-            <label htmlFor="wd-file-upload" className="form-check-label">
-              File Upload
-            </label>
-          </div>
-        </div>
-      </div>
-
       {/* Assign To, Due Date, Available From, Available Until */}
       <div className="row">
         <div className="col-md-6 mb-3">
@@ -124,6 +114,8 @@ export default function AssignmentEditor() {
             id="wd-assign-to"
             className="form-control"
             placeholder="Student names"
+            value="All students"
+            readOnly
           />
         </div>
 
@@ -131,28 +123,32 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-due-date" className="form-label">
             Due Date
           </label>
-          <input type="date" id="wd-due-date" className="form-control" />
+          <input type="date" id="wd-due-date" className="form-control" value="2024-10-10" />
         </div>
 
         <div className="col-md-6 mb-3">
           <label htmlFor="wd-available-from" className="form-label">
             Available From
           </label>
-          <input type="date" id="wd-available-from" className="form-control" />
+          <input type="date" id="wd-available-from" className="form-control" value="2024-09-20" />
         </div>
 
         <div className="col-md-6 mb-3">
           <label htmlFor="wd-available-until" className="form-label">
             Available Until
           </label>
-          <input type="date" id="wd-available-until" className="form-control" />
+          <input type="date" id="wd-available-until" className="form-control" value="2024-10-20" />
         </div>
       </div>
 
       {/* Save and Cancel Buttons */}
       <div className="float-end">
-        <button className="btn btn-secondary me-2">Cancel</button>
-        <button className="btn btn-danger">Save</button>
+        <Link to={`/courses/${cid}/assignments`} className="btn btn-secondary me-2">
+          Cancel
+        </Link>
+        <Link to={`/courses/${cid}/assignments`} className="btn btn-danger">
+          Save
+        </Link>
       </div>
     </div>
   );

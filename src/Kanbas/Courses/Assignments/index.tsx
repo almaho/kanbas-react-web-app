@@ -1,84 +1,103 @@
-import { useParams } from "react-router";
-import * as db from "../../Database";
-import { FaSearch, FaPlus } from "react-icons/fa";
-import { MdAssignment } from "react-icons/md";
-import { BiCalendar } from "react-icons/bi";
-import { AiOutlineStar } from "react-icons/ai";
+import { FaPlus } from "react-icons/fa6";
+import { FaSearch } from "react-icons/fa";
 import { BsGripVertical } from "react-icons/bs";
-import ModuleControlButtons from "./ModuleControlButtons";
-import LessonControlButtons from "./LessonControlButtons";
+import { BiBible } from "react-icons/bi";
+import { useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { deleteAssignment } from "./reducer";
+import ModuleControlButton from "./ModuleControlButtons";
 
 export default function Assignments() {
-  const { cid } = useParams(); // Get course ID from URL
-
-  // Debugging: Log course ID
-  console.log("Course ID from URL:", cid);
-
-  const { assignments } = db;  // Fetch assignments from the database
-
-  // Debugging: Log all assignments to check structure
-  console.log("All assignments:", assignments);
-
-  // Filter assignments for the current course
-  const filteredAssignments = assignments.filter(
-    (assignment) => assignment.course === cid
-  );
-
-  // Debugging: Log filtered assignments
-  console.log("Filtered assignments for course:", cid, filteredAssignments);
+  const { cid } = useParams();
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
+  const isFaculty = currentUser.role === "FACULTY";
 
   return (
-    <div id="wd-assignments" className="p-4">
-      {/* Search and control buttons */}
+    <div id="assignments-section" className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="position-relative" style={{ width: "300px" }}>
-          <FaSearch className="position-absolute" style={{ left: "10px", top: "10px", fontSize: "1.2rem" }} />
-          <input id="wd-search-assignment" placeholder="Search for Assignments" className="form-control ps-5" />
+        <div className="input-group" style={{ maxWidth: "380px" }}>
+          <span className="input-group-text bg-light">
+            <FaSearch />
+          </span>
+          <input
+            id="search-assignments"
+            placeholder="Search Assignments"
+            className="form-control"
+          />
         </div>
-        <div>
-          <button id="wd-add-assignment-group" className="btn btn-secondary me-2">
-            <FaPlus className="me-1" /> Group
-          </button>
-          <button id="wd-add-assignment" className="btn btn-danger">
-            <FaPlus className="me-1" /> Assignment
-          </button>
-        </div>
+        {isFaculty && (
+          <div className="btn-group">
+            <button
+              id="add-assignment-group"
+              className="btn btn-outline-secondary me-2 d-flex align-items-center"
+            >
+              <FaPlus className="me-2" /> New Group
+            </button>
+            <a
+              href={`#${pathname}/Editor`}
+              className="btn btn-outline-danger d-flex align-items-center"
+            >
+              <FaPlus className="me-2" /> New Assignment
+            </a>
+          </div>
+        )}
       </div>
 
-      {/* Title with module control buttons */}
-      <h3 id="wd-assignments-title" className="mb-3">
-        <BsGripVertical className="me-2 fs-3" />
-        ASSIGNMENTS <ModuleControlButtons />
-      </h3>
+      <header
+        className="d-flex justify-content-between align-items-center bg-secondary text-white p-3 rounded"
+      >
+        <div className="d-flex align-items-center">
+          <BsGripVertical className="me-3 fs-4" />
+          <span className="me-2 fs-6">&#9660;</span>
+          <strong>Assignments</strong>
+        </div>
+        <div className="badge bg-light text-dark px-3 py-2">
+          40% of Total
+          <FaPlus className="ms-3 fs-5" />
+        </div>
+      </header>
 
-      {/* Check if there are any assignments for this course */}
-      {filteredAssignments.length > 0 ? (
-        <ul id="wd-assignment-list" className="list-unstyled">
-          {filteredAssignments.map((assignment) => (
-            <li key={assignment._id} className="wd-assignment-list-item border p-3 mb-2 rounded">
-              <div className="d-flex justify-content-between align-items-center">
+      <ul id="assignment-list" className="list-group mt-3">
+        {assignments
+          .filter((assignment: any) => assignment.course === cid)
+          .map((assignment: any) => (
+            <li
+              key={assignment._id}
+              className="assignment-item d-flex justify-content-between align-items-center p-3 border rounded mb-2 shadow-sm"
+            >
+              <div className="d-flex align-items-center">
+                <BsGripVertical className="me-3 text-muted fs-4" />
+                <BiBible className="me-3 text-primary fs-4" />
                 <div>
-                  <h5 className="mb-1">
-                    <BsGripVertical className="me-2 fs-3" />
-                    <MdAssignment className="me-2" />
-                    <a className="wd-assignment-link" href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
+                  {isFaculty ? (
+                    <a
+                      href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                      className="h5 text-decoration-none text-dark"
+                    >
                       {assignment.title}
                     </a>
-                  </h5>
-                  <small className="text-muted">
-                    <BiCalendar className="me-1" /> Due: {assignment.due || "TBD"} |
-                    <span className="mx-1">Start: {assignment.start || "TBD"} |</span>
-                    <AiOutlineStar className="me-1" /> Points: {assignment.points || "0"}
+                  ) : (
+                    <h5 className="text-dark">{assignment.title}</h5>
+                  )}
+                  <small className="text-muted d-block mt-1">
+                    <span className="text-danger">Multiple Modules</span> |
+                    <strong> From:</strong> {assignment.availableFrom} |
+                    <strong> Until:</strong> {assignment.availableUntil} |
+                    <strong> Due:</strong> {assignment.dueDate} |
+                    {assignment.points} pts
                   </small>
                 </div>
-                <LessonControlButtons />
               </div>
+              <ModuleControlButton
+                deleteAssignment={() => dispatch(deleteAssignment(assignment._id))}
+              />
             </li>
           ))}
-        </ul>
-      ) : (
-        <p>No assignments found for this course.</p>
-      )}
+      </ul>
     </div>
   );
 }

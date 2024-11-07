@@ -2,17 +2,17 @@ import { Routes, Route, Navigate, useParams } from "react-router";
 import Home from "./Home";
 import Modules from "./Modules";
 import CoursesNavigation from "./Navigation";
-import { courses } from "../Database";
 import { FaAlignJustify } from "react-icons/fa6";
 import PeopleTable from "./People/Table";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import {useLocation} from "react-router-dom";
 
-export default function Courses() {
+export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
   const { pathname } = useLocation();
+  
 
   return (
     <div id="wd-courses">

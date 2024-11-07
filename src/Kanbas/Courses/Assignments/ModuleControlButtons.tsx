@@ -1,15 +1,24 @@
-import { IoEllipsisVertical } from "react-icons/io5";
-import { BsPlus } from "react-icons/bs";
+import {IoEllipsisVertical} from "react-icons/io5";
+import GreenCheckmark from "./GreenCheckmark";
+import {FaTrash} from "react-icons/fa";
+import { FaPencil } from "react-icons/fa6";
+import {useSelector} from "react-redux";
 
-export default function ModuleControlButtons() {
-  return (
-    <div className="float-end">
-      {/* Button for "40% of Total" */}
-      <button className="btn btn-outline-secondary fs-6" style={{ marginRight: "10px" }}>
-        40% of Total
-      </button>
-      <BsPlus className="fs-4" style={{ marginLeft: "10px" }} />
-      <IoEllipsisVertical className="fs-4" style={{ marginLeft: "10px" }} />
-    </div>
-  );
+
+export default function ModuleControlButton({deleteAssignment}: {
+    deleteAssignment: () => void;
+}) {
+    const {currentUser} = useSelector((state: any) => state.accountReducer);
+    const isFaculty = currentUser.role === "FACULTY";
+    return (
+    
+        <div className="float-end">
+          
+          <FaTrash className="text-danger me-2 mb-1" onClick={() => deleteAssignment()}/>
+
+          <GreenCheckmark />
+        
+          <IoEllipsisVertical className="fs-4" />
+        </div>
+    );
 }

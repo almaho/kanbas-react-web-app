@@ -1,0 +1,65 @@
+/* styles.css */
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between; /* Space between content and buttons */
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+  }
+  
+  /* Styling for each button */
+  #wd-add-todo-click {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  #wd-update-todo-click {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  #wd-delete-todo-click {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  #wd-set-todo-click {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* Optional styling for input fields */
+  input {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+  }
+  
+  

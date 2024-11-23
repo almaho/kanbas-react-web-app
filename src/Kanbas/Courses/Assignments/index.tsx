@@ -5,16 +5,28 @@ import { BiBible } from "react-icons/bi";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
-import { deleteAssignment } from "./reducer";
+import { setAssignments, deleteAssignment } from "./reducer";
 import ModuleControlButton from "./ModuleControlButtons";
+import * as client from "./client"
 
 export default function Assignments() {
   const { cid } = useParams();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  const fetchAssignments = async () => {
+    try {
+        dispatch(setAssignments( await client.fetchAssignmentsForCourse(cid as string) ));
+    } catch (error) {
+        console.error(error);
+    }
+};
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const isFaculty = currentUser.role === "FACULTY";
+  const removeAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+};
 
   return (
     <div id="assignments-section" className="container-fluid">
@@ -63,7 +75,6 @@ export default function Assignments() {
 
       <ul id="assignment-list" className="list-group mt-3">
         {assignments
-          .filter((assignment: any) => assignment.course === cid)
           .map((assignment: any) => (
             <li
               key={assignment._id}

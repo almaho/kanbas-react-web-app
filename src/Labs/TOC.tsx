@@ -48,9 +48,35 @@ export default function TOC() { const { pathname } = useLocation()
           target="_blank" 
           rel="noreferrer"
         >
-          GitHub Repository
+          GitHub Repository 1 
         </a>
       </li>
+
+      <li className="nav-item">
+        <a 
+          href="https://github.com/almaho/kanbas-node-server-app" className="nav-link"
+          id="wd-github" 
+          target="_blank" 
+          rel="noreferrer"
+        >
+          GitHub Repository 2 
+
+          
+        </a>
+      </li>
+      <li className="nav-item">
+        <a 
+          href=" https://kanbas-node-server-app-26qi.onrender.com" className="nav-link"
+          id="wd-github" 
+          target="_blank" 
+          rel="noreferrer"
+        >
+          Server (render)
+
+          
+        </a>
+      </li>
+      https://kanbas-node-server-app-26qi.onrender.com
     </ul>
   );
 }

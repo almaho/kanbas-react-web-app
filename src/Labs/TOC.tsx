@@ -76,7 +76,6 @@ export default function TOC() { const { pathname } = useLocation()
           
         </a>
       </li>
-      https://kanbas-node-server-app-26qi.onrender.com
     </ul>
   );
 }
